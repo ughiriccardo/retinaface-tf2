@@ -4,6 +4,8 @@ import sys
 import time
 import numpy as np
 import os
+from absl import app, flags, logging
+from absl.flags import FLAGS
 import tensorflow as tf
 from PIL import Image 
 from absl import logging
@@ -229,10 +231,10 @@ def get_bbox_imgs(img, ann, img_height, img_width):
 ###############################################################################
 #   Detect faces                                                              #
 ###############################################################################
-def get_faces(cfg_path, img_path, iou_th, score_th, gpu):
+def get_faces(cfg_path, img_path):
     # init
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-    os.environ['CUDA_VISIBLE_DEVICES'] = gpu
+    os.environ['CUDA_VISIBLE_DEVICES'] = FLAG.gpu
 
     logger = tf.get_logger()
     logger.disabled = True
@@ -242,7 +244,7 @@ def get_faces(cfg_path, img_path, iou_th, score_th, gpu):
     cfg = load_yaml(cfg_path)
 
     # define network
-    model = RetinaFaceModel(cfg, training=False, iou_th=iou_th, score_th=score_th)
+    model = RetinaFaceModel(cfg, training=False, iou_th=FLAG.iou_th, score_th=FLAG.score_th)
 
     # load checkpoint
     checkpoint_dir = './checkpoints/' + cfg['sub_name']
@@ -254,8 +256,8 @@ def get_faces(cfg_path, img_path, iou_th, score_th, gpu):
         print("[*] Cannot find ckpt from {}.".format(checkpoint_dir))
         exit()
 
-    if not os.path.exists(FLAGS.img_path):
-        print(f"cannot find image path from {FLAGS.img_path}")
+    if not os.path.exists(img_path):
+        print(f"cannot find image path from {img_path}")
         exit()
 
     print("[*] Processing on single image {}".format(img_path))
