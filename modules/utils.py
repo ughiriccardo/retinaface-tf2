@@ -5,7 +5,6 @@ import time
 import numpy as np
 import os
 import tensorflow as tf
-from absl import app, flags, logging
 from test import FLAGS
 from modules.models import RetinaFaceModel
 from PIL import Image 
