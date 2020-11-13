@@ -224,7 +224,7 @@ def get_bbox_imgs(img, ann, img_height, img_width):
     return img[y1:y2, x1:x2]
 
 
-def get_faces(_argv):
+def get_faces(cfg_path, img_path):
     # init
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     os.environ['CUDA_VISIBLE_DEVICES'] = FLAGS.gpu
