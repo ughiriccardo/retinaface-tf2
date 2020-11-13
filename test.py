@@ -6,7 +6,7 @@ import numpy as np
 import tensorflow as tf
 import time
 
-from IPython.display import Image
+from PIL import Image 
 from modules.models import RetinaFaceModel
 from modules.utils import (set_memory_growth, load_yaml, draw_bbox_landm,
                            pad_input_image, recover_pad_output,
@@ -70,18 +70,20 @@ def main(_argv):
     # recover padding effect
     outputs = recover_pad_output(outputs, pad_params)
 
+
     # draw and save results
     imgs = []
     save_img_path = os.path.join('data/out_' + os.path.basename(FLAGS.img_path))
-    for prior_index in range(len(outputs)):
+    for prior_index in range(9):
+      if(prior_index < len(outputs)):
         img = get_bbox_imgs(img_raw, outputs[prior_index], img_height_raw, img_width_raw)
         img = cv2.resize(img, (64, 64)) 
         imgs.append(img)
-        
+      else:
+        imgs.append(Image.new('RGB', (64, 64)))
     imga = imgs[0]
     for img in imgs[1:]:
-      imga = np.concatenate((imga, img), axis=1)
-        
+      imga = np.concatenate((imga, img), axis=1)     
     cv2.imwrite(save_img_path, imga)
        
     print(f"[*] save result at {save_img_path}")
