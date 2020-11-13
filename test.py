@@ -8,7 +8,8 @@ import time
 
 from modules.models import RetinaFaceModel
 from modules.utils import (set_memory_growth, load_yaml, draw_bbox_landm,
-                           pad_input_image, recover_pad_output)
+                           pad_input_image, recover_pad_output,
+                           get_bbox_imgs, get_one_image)
 
 
 flags.DEFINE_string('cfg_path', './configs/retinaface_res50.yaml',
@@ -71,8 +72,8 @@ def main(_argv):
     # draw and save results
     save_img_path = os.path.join('data/out_' + os.path.basename(FLAGS.img_path))
     for prior_index in range(len(outputs)):
-        draw_bbox_landm(img_raw, outputs[prior_index], img_height_raw, img_width_raw)
-        cv2.imwrite(save_img_path, img_raw)
+        img = get_bbox_imgs(img_raw, outputs[prior_index], img_height_raw, img_width_raw)
+        cv2.imwrite(save_img_path, img)
         
     print(f"[*] save result at {save_img_path}")
 
