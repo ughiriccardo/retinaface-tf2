@@ -70,23 +70,29 @@ def main(_argv):
     # recover padding effect
     outputs = recover_pad_output(outputs, pad_params)
 
-
     # draw and save results
     imgs = []
+    DIM = 64;
     save_img_path = os.path.join('data/out_' + os.path.basename(FLAGS.img_path))
     for prior_index in range(9):
       if(prior_index < len(outputs)):
         img = get_bbox_imgs(img_raw, outputs[prior_index], img_height_raw, img_width_raw)
-        img = cv2.resize(img, (64, 64)) 
+        img = cv2.resize(img, (DIM, DIM)) 
         imgs.append(img)
       else:
-        imgs.append(Image.new('RGB', (64, 64)))
+        imgs.append(Image.new('RGB', (DIM, DIM)))
     imga = imgs[0]
-    for img in imgs[1:]:
+    for img in imgs[1:3]:
       imga = np.concatenate((imga, img), axis=1)     
-    cv2.imwrite(save_img_path, imga)
-       
-    print(f"[*] save result at {save_img_path}")
+    imgb = imgs[3]
+    for img in imgs[4:6]:
+      imgb = np.concatenate((imgb, img), axis=1)  
+    imgf = np.concatenate((imga, imgb), axis=0)
+    imgc = imgs[6]
+    for img in imgs[7:9]:
+      imgc = np.concatenate((imgc, img), axis=1)  
+    imgf = np.concatenate((imgf, imgc), axis=0)
+    cv2.imwrite(save_img_path, imgf)
 
     
 
