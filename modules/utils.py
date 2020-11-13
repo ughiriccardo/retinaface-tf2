@@ -226,7 +226,10 @@ def get_bbox_imgs(img, ann, img_height, img_width):
     return img[y1:y2, x1:x2]
 
 
-def get_faces(cfg_path, img_path):
+###############################################################################
+#   Detect faces                                                              #
+###############################################################################
+def get_faces(cfg_path, img_path, iou_th, score_th):
     # init
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     os.environ['CUDA_VISIBLE_DEVICES'] = FLAGS.gpu
@@ -236,10 +239,10 @@ def get_faces(cfg_path, img_path):
     logger.setLevel(logging.FATAL)
     set_memory_growth()
 
-    cfg = load_yaml(FLAGS.cfg_path)
+    cfg = load_yaml(cfg_path)
 
     # define network
-    model = RetinaFaceModel(cfg, training=False, iou_th=FLAGS.iou_th, score_th=FLAGS.score_th)
+    model = RetinaFaceModel(cfg, training=False, iou_th=iou_th, score_th=score_th)
 
     # load checkpoint
     checkpoint_dir = './checkpoints/' + cfg['sub_name']
@@ -255,14 +258,12 @@ def get_faces(cfg_path, img_path):
         print(f"cannot find image path from {FLAGS.img_path}")
         exit()
 
-    print("[*] Processing on single image {}".format(FLAGS.img_path))
+    print("[*] Processing on single image {}".format(img_path))
 
-    img_raw = cv2.imread(FLAGS.img_path)
+    img_raw = cv2.imread(img_path)
     img_height_raw, img_width_raw, _ = img_raw.shape
     img = np.float32(img_raw.copy())
 
-    if FLAGS.down_scale_factor < 1.0:
-        img = cv2.resize(img, (0, 0), fx=FLAGS.down_scale_factor, fy=FLAGS.down_scale_factor, interpolation=cv2.INTER_LINEAR)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
     # pad input image to avoid unmatched shape problem
@@ -277,7 +278,7 @@ def get_faces(cfg_path, img_path):
     # draw and save results
     imgs = []
     DIM = 64;
-    save_img_path = os.path.join('data/out_' + os.path.basename(FLAGS.img_path))
+    save_img_path = os.path.join('data/out_' + os.path.basename(img_path))
     for prior_index in range(9):
       if(prior_index < len(outputs)):
         img = get_bbox_imgs(img_raw, outputs[prior_index], img_height_raw, img_width_raw)
@@ -299,3 +300,4 @@ def get_faces(cfg_path, img_path):
     cv2.imwrite(save_img_path, imgf)
 
     print(f"[*] save result at {save_img_path}")
+
