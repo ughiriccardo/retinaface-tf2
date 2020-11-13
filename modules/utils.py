@@ -210,7 +210,7 @@ def get_bbox_imgs(img, ann, img_height, img_width):
     imgs = None
     x1, y1, x2, y2 = int(ann[0] * img_width), int(ann[1] * img_height), \
                      int(ann[2] * img_width), int(ann[3] * img_height)
-    d = 12
+    d = 6
     x1 -= d
     if(x1 < 0):
       x1 = 0
