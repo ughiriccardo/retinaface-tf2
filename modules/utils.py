@@ -208,4 +208,4 @@ def get_bbox_imgs(img, ann, img_height, img_width):
     # bbox
     x1, y1, x2, y2 = int(ann[0] * img_width), int(ann[1] * img_height), \
                      int(ann[2] * img_width), int(ann[3] * img_height)
-    cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
+    return img[y1:y2, x1:x2]
