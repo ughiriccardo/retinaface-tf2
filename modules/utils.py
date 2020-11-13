@@ -264,7 +264,7 @@ def get_faces(model, cfg_path, img_path):
         print(f"cannot find image path from {img_path}")
         exit()
 
-     cfg = load_yaml(cfg_path)
+    cfg = load_yaml(cfg_path)
             
     img_raw = cv2.imread(img_path)
     img_height_raw, img_width_raw, _ = img_raw.shape
