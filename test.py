@@ -70,11 +70,19 @@ def main(_argv):
     outputs = recover_pad_output(outputs, pad_params)
 
     # draw and save results
+    imgs = []
     save_img_path = os.path.join('data/out_' + os.path.basename(FLAGS.img_path))
     for prior_index in range(len(outputs)):
         img = get_bbox_imgs(img_raw, outputs[prior_index], img_height_raw, img_width_raw)
-        cv2.imwrite(save_img_path, img)
+        img = cv2.resize(img, (64, 64)) 
+        imgs.append(img)
         
+    imga = imgs[0]
+    for img in imgs[1:]:
+      imga = np.concatenate((imga, img), axis=1)
+        
+    cv2.imwrite(save_img_path, imga)
+       
     print(f"[*] save result at {save_img_path}")
 
     
