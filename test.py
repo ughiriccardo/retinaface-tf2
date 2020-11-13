@@ -94,6 +94,8 @@ def main(_argv):
     imgf = np.concatenate((imgf, imgc), axis=0)
     cv2.imwrite(save_img_path, imgf)
 
+    print(f"[*] save result at {save_img_path}")
+
     
 
 if __name__ == '__main__':
