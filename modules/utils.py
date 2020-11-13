@@ -12,6 +12,9 @@ from PIL import Image
 from absl import logging
 from modules.dataset import load_tfrecord_dataset
 
+flags.DEFINE_string('gpu', '0', 'which gpu to use')
+flags.DEFINE_float('iou_th', 0.4, 'iou threshold for nms')
+flags.DEFINE_float('score_th', 0.5, 'score threshold for nms')
 
 def load_yaml(load_path):
     """load yaml file"""
@@ -232,10 +235,10 @@ def get_bbox_imgs(img, ann, img_height, img_width):
 ###############################################################################
 #   Detect faces                                                              #
 ###############################################################################
-def get_faces(cfg_path, img_path, gpu):
+def get_faces(cfg_path, img_path):
     # init
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-    os.environ['CUDA_VISIBLE_DEVICES'] = gpu
+    os.environ['CUDA_VISIBLE_DEVICES'] = FLAGS.gpu
 
     logger = tf.get_logger()
     logger.disabled = True
