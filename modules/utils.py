@@ -5,7 +5,6 @@ import time
 import numpy as np
 import os
 import tensorflow as tf
-from test import FLAGS
 from modules.models import RetinaFaceModel
 from PIL import Image 
 from absl import logging
@@ -230,10 +229,10 @@ def get_bbox_imgs(img, ann, img_height, img_width):
 ###############################################################################
 #   Detect faces                                                              #
 ###############################################################################
-def get_faces(cfg_path, img_path):
+def get_faces(cfg_path, img_path, iou_th, score_th):
     # init
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-    os.environ['CUDA_VISIBLE_DEVICES'] = FLAGS.gpu
+    os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
     logger = tf.get_logger()
     logger.disabled = True
@@ -243,7 +242,7 @@ def get_faces(cfg_path, img_path):
     cfg = load_yaml(cfg_path)
 
     # define network
-    model = RetinaFaceModel(cfg, training=False, iou_th=FLAGS.iou_th, score_th=FLAGS.score_th)
+    model = RetinaFaceModel(cfg, training=False, iou_th=iou_th, score_th=score_th)
 
     # load checkpoint
     checkpoint_dir = './checkpoints/' + cfg['sub_name']
