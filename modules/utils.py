@@ -6,15 +6,11 @@ import numpy as np
 import os
 import tensorflow as tf
 from absl import app, flags, logging
-from absl.flags import FLAGS
+from test import FLAGS
 from modules.models import RetinaFaceModel
 from PIL import Image 
 from absl import logging
 from modules.dataset import load_tfrecord_dataset
-
-flags.DEFINE_string('gpu', '0', 'which gpu to use')
-flags.DEFINE_float('iou_th', 0.4, 'iou threshold for nms')
-flags.DEFINE_float('score_th', 0.5, 'score threshold for nms')
 
 def load_yaml(load_path):
     """load yaml file"""
