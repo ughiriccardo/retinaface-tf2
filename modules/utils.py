@@ -229,7 +229,7 @@ def get_bbox_imgs(img, ann, img_height, img_width):
 ###############################################################################
 #   Detect faces                                                              #
 ###############################################################################
-def get_faces(cfg_path, img_path, iou_th, score_th):
+def get_model(cfg_path, img_path, iou_th, score_th):
     # init
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -257,7 +257,10 @@ def get_faces(cfg_path, img_path, iou_th, score_th):
     if not os.path.exists(img_path):
         print(f"cannot find image path from {img_path}")
         exit()
+    
+    return model
 
+def get_faces(model, cfg_path, img_path):
     print("[*] Processing on single image {}".format(img_path))
 
     img_raw = cv2.imread(img_path)
