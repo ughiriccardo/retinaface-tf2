@@ -69,7 +69,7 @@ def main(_argv):
     outputs = recover_pad_output(outputs, pad_params)
 
     # draw and save results
-    save_img_path = os.path.join('out_' + os.path.basename(FLAGS.img_path))
+    save_img_path = os.path.join('/content/retinaface-tf2/data/out_' + os.path.basename(FLAGS.img_path))
     for prior_index in range(len(outputs)):
         draw_bbox_landm(img_raw, outputs[prior_index], img_height_raw, img_width_raw)
         cv2.imwrite(save_img_path, img_raw)
