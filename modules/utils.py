@@ -229,7 +229,7 @@ def get_bbox_imgs(img, ann, img_height, img_width):
 ###############################################################################
 #   Detect faces                                                              #
 ###############################################################################
-def get_model(iou_th, score_th):
+def get_model(cfg_path, iou_th, score_th):
     # init
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     os.environ['CUDA_VISIBLE_DEVICES'] = '0'
