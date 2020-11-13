@@ -229,10 +229,10 @@ def get_bbox_imgs(img, ann, img_height, img_width):
 ###############################################################################
 #   Detect faces                                                              #
 ###############################################################################
-def get_faces(cfg_path, img_path, iou_th, score_th):
+def get_faces(cfg_path, img_path, iou_th, score_th, gpu):
     # init
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
-    os.environ['CUDA_VISIBLE_DEVICES'] = FLAGS.gpu
+    os.environ['CUDA_VISIBLE_DEVICES'] = gpu
 
     logger = tf.get_logger()
     logger.disabled = True
