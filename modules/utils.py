@@ -229,8 +229,10 @@ def get_bbox_imgs(img, ann, img_height, img_width):
 ###############################################################################
 #   Detect faces                                                              #
 ###############################################################################
-def get_model(cfg_path, iou_th, score_th):
+def get_model(cfg_path):
     # init
+    IOU_TH = 0.5
+    SCORE_TH = 0.4
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
@@ -242,7 +244,7 @@ def get_model(cfg_path, iou_th, score_th):
     cfg = load_yaml(cfg_path)
 
     # define network
-    model = RetinaFaceModel(cfg, training=False, iou_th=iou_th, score_th=score_th)
+    model = RetinaFaceModel(cfg, training=False, iou_th=IOU_TH, score_th=SCORE_TH)
 
     # load checkpoint
     checkpoint_dir = './checkpoints/' + cfg['sub_name']
@@ -304,7 +306,7 @@ def get_faces(model, cfg_path, img_path):
       imgc = np.concatenate((imgc, img), axis=1)  
     imgf = np.concatenate((imgf, imgc), axis=0)
     cv2.imwrite(save_img_path, imgf)
-    
+    imgf = cv2.cvtColor(imgf, cv2.COLOR_BGR2RGB)
     return imgf
 
     print(f"[*] save result at {save_img_path}")
