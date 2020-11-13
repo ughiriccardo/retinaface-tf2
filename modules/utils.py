@@ -179,3 +179,33 @@ def draw_anchor(img, prior, img_height, img_width):
     x2 = int(prior[0] * img_width + prior[2] * img_width / 2)
     y2 = int(prior[1] * img_height + prior[3] * img_height / 2)
     cv2.rectangle(img, (x1, y1), (x2, y2), (0, 0, 0), 1)
+
+def get_one_image(images):
+        img_list = []
+        padding = 200
+        for img in images:
+            img_list.append(cv2.imread(img))
+        max_width = []
+        max_height = 0
+        for img in img_list:
+            max_width.append(img.shape[0])
+            max_height += img.shape[1]
+        w = np.max(max_width)
+        h = max_height + padding
+
+        # create a new array with a size large enough to contain all the images
+        final_image = np.zeros((h, w, 3), dtype=np.uint8)
+
+        current_y = 0  # keep track of where your current image was last placed in the y coordinate
+        for image in img_list:
+            # add an image to the final array and increment the y coordinate
+            final_image[current_y:image.shape[0] + current_y, :image.shape[1], :] = image
+            current_y += image.shape[0]
+        cv2.imwrite('out.png', final_image)
+
+def get_bbox_imgs(img, ann, img_height, img_width):
+    """draw bboxes and landmarks"""
+    # bbox
+    x1, y1, x2, y2 = int(ann[0] * img_width), int(ann[1] * img_height), \
+                     int(ann[2] * img_width), int(ann[3] * img_height)
+    cv2.rectangle(img, (x1, y1), (x2, y2), (0, 255, 0), 2)
