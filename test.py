@@ -10,7 +10,7 @@ from PIL import Image
 from modules.models import RetinaFaceModel
 from modules.utils import (set_memory_growth, load_yaml, draw_bbox_landm,
                            pad_input_image, recover_pad_output,
-                           get_bbox_imgs, get_one_image)
+                           get_bbox_imgs, get_one_image, get_faces)
 
 
 flags.DEFINE_string('cfg_path', './configs/retinaface_res50.yaml',
