@@ -304,6 +304,8 @@ def get_faces(model, cfg_path, img_path):
       imgc = np.concatenate((imgc, img), axis=1)  
     imgf = np.concatenate((imgf, imgc), axis=0)
     cv2.imwrite(save_img_path, imgf)
+    
+    return imgf
 
     print(f"[*] save result at {save_img_path}")
 
