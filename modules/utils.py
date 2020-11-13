@@ -205,7 +205,20 @@ def get_one_image(images):
 
 def get_bbox_imgs(img, ann, img_height, img_width):
     """draw bboxes and landmarks"""
-    # bbox
+    imgs = None
     x1, y1, x2, y2 = int(ann[0] * img_width), int(ann[1] * img_height), \
                      int(ann[2] * img_width), int(ann[3] * img_height)
+    d = 5
+    x1 -= d
+    if(x1 < 0):
+      x1 = 0
+    x2 += d
+    if(x2 > img_width):
+      x2 = img_width
+    y1 -= d
+    if(y1 < 0):
+      y1 = 0
+    y2 += d
+    if(y2 > img_height):
+      y2 = img_height
     return img[y1:y2, x1:x2]
