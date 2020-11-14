@@ -258,7 +258,7 @@ def get_model(cfg_path):
         
     return model
 
-def get_faces(model, cfg_path, img_path):
+def get_faces(model, cfg_path, img_path, save_path):
     
     print("[*] Processing on single image {}".format(img_path))
     
@@ -286,7 +286,7 @@ def get_faces(model, cfg_path, img_path):
     # draw and save results
     imgs = []
     DIM = 64;
-    save_img_path = os.path.join('/content/FaceDataset/' + os.path.basename(img_path))
+    save_img_path = os.path.join('/content/FaceDataset/', save_path, os.path.basename(img_path))
     for prior_index in range(9):
       if(prior_index < len(outputs)):
         img = get_bbox_imgs(img_raw, outputs[prior_index], img_height_raw, img_width_raw)
