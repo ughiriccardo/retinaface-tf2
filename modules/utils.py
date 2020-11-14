@@ -258,7 +258,7 @@ def get_model(cfg_path):
         
     return model
 
-def get_faces(model, cfg_path, img_path, save_path):
+def get_faces(model, cfg_path, img_path, save_path, **keys):
     
     print("[*] Processing on single image {}".format(img_path))
     
@@ -287,13 +287,16 @@ def get_faces(model, cfg_path, img_path, save_path):
     imgs = []
     DIM = 64;
     save_img_path = os.path.join('/content/FaceDataset/', save_path, os.path.basename(img_path))
+    img_last = Image.new('RGB', (DIM, DIM))
     for prior_index in range(9):
       if(prior_index < len(outputs)):
         img = get_bbox_imgs(img_raw, outputs[prior_index], img_height_raw, img_width_raw)
         img = cv2.resize(img, (DIM, DIM)) 
         imgs.append(img)
+        if(keys['full']):
+            img_last = img 
       else:
-        imgs.append(Image.new('RGB', (DIM, DIM)))
+        imgs.append(img_last)
     imga = imgs[0]
     for img in imgs[1:3]:
       imga = np.concatenate((imga, img), axis=1)     
