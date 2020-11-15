@@ -285,7 +285,7 @@ def get_faces(model, cfg_path, img_path, save_path, **keys):
 
     # draw and save results
     imgs = []
-    DIM = 64;
+    DIM = 75;
     save_img_path = os.path.join('/content/FaceDataset/', save_path, os.path.basename(img_path))
     if(keys['full']):
         save_img_path = os.path.join('/content/FaceDatasetFull/', save_path, os.path.basename(img_path))
