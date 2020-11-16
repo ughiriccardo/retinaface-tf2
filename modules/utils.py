@@ -210,7 +210,7 @@ def get_bbox_imgs(img, ann, img_height, img_width):
     imgs = None
     x1, y1, x2, y2 = int(ann[0] * img_width), int(ann[1] * img_height), \
                      int(ann[2] * img_width), int(ann[3] * img_height)
-    d = 6
+    d = 15
     x1 -= d
     if(x1 < 0):
       x1 = 0
@@ -258,7 +258,7 @@ def get_model(cfg_path):
         
     return model
 
-def get_faces(model, cfg_path, img_path, save_path, **keys):
+def get_faces(model, cfg_path, img_path, save_path, type=''):
     
     print("[*] Processing on single image {}".format(img_path))
     
@@ -285,19 +285,21 @@ def get_faces(model, cfg_path, img_path, save_path, **keys):
 
     # draw and save results
     imgs = []
-    DIM = 110;
+    DIM = 75;
     save_img_path = os.path.join('/content/FaceDataset/', save_path, os.path.basename(img_path))
-    if(keys['full']):
+    if(type == 'full'):
         save_img_path = os.path.join('/content/FaceDatasetFull/', save_path, os.path.basename(img_path))
-    if(keys['extra']):
+    elif(type == 'extra'):
         save_img_path = os.path.join('/content/FaceDatasetExtra/', save_path, os.path.basename(img_path))
+    elif(type == 'large'):
+        save_img_path = os.path.join('/content/FaceDatasetLarge/', save_path, os.path.basename(img_path))
     img_last = Image.new('RGB', (DIM, DIM))
     for prior_index in range(9):
       if(prior_index < len(outputs)):
         img = get_bbox_imgs(img_raw, outputs[prior_index], img_height_raw, img_width_raw)
         img = cv2.resize(img, (DIM, DIM)) 
         imgs.append(img)
-        if(keys['full']):
+        if(type == 'full'):
             img_last = img 
       else:
         imgs.append(img_last)
