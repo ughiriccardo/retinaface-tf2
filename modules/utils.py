@@ -258,7 +258,7 @@ def get_model(cfg_path):
         
     return model
 
-def get_faces(model, cfg_path, img_path, save_path, type=''):
+def get_faces(model, cfg_path, img_path, save_path, type):
     
     print("[*] Processing on single image {}".format(img_path))
     
