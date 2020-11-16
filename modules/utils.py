@@ -289,7 +289,7 @@ def get_faces(model, cfg_path, img_path, save_path, **keys):
     save_img_path = os.path.join('/content/FaceDataset/', save_path, os.path.basename(img_path))
     if(keys['full']):
         save_img_path = os.path.join('/content/FaceDatasetFull/', save_path, os.path.basename(img_path))
-    elif keys['extra']:
+    if(keys['extra']):
         save_img_path = os.path.join('/content/FaceDatasetExtra/', save_path, os.path.basename(img_path))
     img_last = Image.new('RGB', (DIM, DIM))
     for prior_index in range(9):
