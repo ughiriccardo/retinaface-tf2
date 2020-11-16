@@ -314,7 +314,8 @@ def get_faces(model, cfg_path, img_path, save_path, **keys):
     imgf = np.concatenate((imgf, imgc), axis=0)
     cv2.imwrite(save_img_path, imgf)
     imgf = cv2.cvtColor(imgf, cv2.COLOR_BGR2RGB)
+    print(f"[*] save result at {save_img_path}")
     return imgf
 
-    print(f"[*] save result at {save_img_path}")
+   
 
