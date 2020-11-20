@@ -292,6 +292,7 @@ def get_faces(model, cfg_path, img_path, save_path, type):
     outputs = recover_pad_output(outputs, pad_params)
 
     # draw and save results
+    DIM = 75
     imgs = []
     save_img_path = os.path.join('/content/FaceDataset' + type, save_path, os.path.basename(img_path))
     img_last = Image.new('RGB', (DIM, DIM))
