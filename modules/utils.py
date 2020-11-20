@@ -215,8 +215,8 @@ def get_bbox_imgs(img, ann, img_height, img_width):
     imgs = None
     x1, y1, x2, y2 = int(ann[0] * img_width), int(ann[1] * img_height), \
                      int(ann[2] * img_width), int(ann[3] * img_height)
-    dw = int(-img_width * 0.15)
-    dh = int(-img_height * 0.15)
+    dw = -img_width * 0.15
+    dh = -img_height * 0.15
     x1 -= dw
     if(x1 < 0):
       x1 = 0
@@ -229,6 +229,10 @@ def get_bbox_imgs(img, ann, img_height, img_width):
     y2 += dh
     if(y2 > img_height):
       y2 = img_height
+    y1 = int(y1)
+    y2 = int(y2)
+    x1 = int(x1)
+    x2 = int(x2)
     return img[y1:y2, x1:x2]
 
 # return the CNN model able to detect faces into image  
