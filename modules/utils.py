@@ -217,7 +217,6 @@ def get_bbox_imgs(img, ann, img_height, img_width):
                      ann[2] * img_width, ann[3] * img_height
     dw = img_width * 0.15
     dh = img_height * 0.15
-    print(dw, dh)
     x1 -= dw
     if(x1 < 0):
       x1 = 0
@@ -230,7 +229,6 @@ def get_bbox_imgs(img, ann, img_height, img_width):
     y2 += dh
     if(y2 > img_height):
       y2 = img_height
-    print(x1,x2,y1,y2)
     y1 = int(y1)
     y2 = int(y2)
     x1 = int(x1)
