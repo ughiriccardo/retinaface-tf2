@@ -205,6 +205,10 @@ def get_one_image(images):
             current_y += image.shape[0]
         cv2.imwrite('out.png', final_image)
 
+###############################################################################
+#   Detect and save group of 9 faces into a single image                                                              #
+###############################################################################
+
 def get_bbox_imgs(img, ann, img_height, img_width):
     """draw bboxes and landmarks"""
     imgs = None
@@ -225,10 +229,6 @@ def get_bbox_imgs(img, ann, img_height, img_width):
       y2 = img_height
     return img[y1:y2, x1:x2]
 
-
-###############################################################################
-#   Detect faces                                                              #
-###############################################################################
 def get_model(cfg_path):
     # init
     IOU_TH = 0.5
