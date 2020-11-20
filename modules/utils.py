@@ -209,6 +209,7 @@ def get_one_image(images):
 #   Detect and save group of 9 faces into a single image                                                              #
 ###############################################################################
 
+# return the image in 'img' nr. 'ann' with dimension specified
 def get_bbox_imgs(img, ann, img_height, img_width):
     """draw bboxes and landmarks"""
     imgs = None
@@ -229,6 +230,7 @@ def get_bbox_imgs(img, ann, img_height, img_width):
       y2 = img_height
     return img[y1:y2, x1:x2]
 
+# return the CNN model able to detect faces into image  
 def get_model(cfg_path):
     # init
     IOU_TH = 0.5
@@ -258,6 +260,7 @@ def get_model(cfg_path):
         
     return model
 
+# return an image containing at maximum 9 faces from original image 'img_path' and save it into 'save_path'
 def get_faces(model, cfg_path, img_path, save_path, type):
     
     print("[*] Processing on single image {}".format(img_path))
