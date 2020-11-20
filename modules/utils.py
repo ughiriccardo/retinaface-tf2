@@ -289,14 +289,7 @@ def get_faces(model, cfg_path, img_path, save_path, type):
 
     # draw and save results
     imgs = []
-    DIM = 75;
-    save_img_path = os.path.join('/content/FaceDataset/', save_path, os.path.basename(img_path))
-    if(type == 'full'):
-        save_img_path = os.path.join('/content/FaceDatasetFull/', save_path, os.path.basename(img_path))
-    elif(type == 'extra'):
-        save_img_path = os.path.join('/content/FaceDatasetExtra/', save_path, os.path.basename(img_path))
-    elif(type == 'large'):
-        save_img_path = os.path.join('/content/FaceDatasetLarge/', save_path, os.path.basename(img_path))
+    save_img_path = os.path.join('/content/FaceDataset' + type, save_path, os.path.basename(img_path))
     img_last = Image.new('RGB', (DIM, DIM))
     for prior_index in range(9):
       if(prior_index < len(outputs)):
