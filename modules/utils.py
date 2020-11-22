@@ -217,8 +217,8 @@ def get_bbox_imgs(img, ann, img_height, img_width):
                      ann[2] * img_width, ann[3] * img_height
     #dw = -(x2-x1) * 0.15
     #dh = -(y2-y1) * 0.15
-    dw = 6
-    dh = 6
+    dw = 0
+    dh = 0
     x1 -= dw
     if(x1 < 0):
       x1 = 0
